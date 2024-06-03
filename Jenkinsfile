@@ -36,6 +36,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    powershell 'minikube start'
                     powershell 'kubectl config use-context minikube'
                     powershell "kubectl set image deployment/appjendoc01 web-app=${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} -n ${env.KUBERNETES_NAMESPACE} || kubectl apply -f k8s\\deployment.yaml -n ${env.KUBERNETES_NAMESPACE}"
                     powershell 'kubectl apply -f k8s\\service.yaml -n ${env.KUBERNETES_NAMESPACE}'
