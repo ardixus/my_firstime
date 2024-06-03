@@ -5,7 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'dockerhub_ardixus' // Replace with your Docker Hub credentials ID in Jenkins
         GIT_REPO = 'https://github.com/ardixus/my_firstime.git' // Replace with your GitHub repository URL
         DOCKER_IMAGE = 'ardixus/appjendoc01' // Replace with your Docker Hub username and image name
-        KUBERNETES_NAMESPACE = 'appsweb' // Replace with your desired Kubernetes namespace
+        KUBERNETES_NAMESPACE = 'default' // Replace with your desired Kubernetes namespace
     }
 
     stages {
