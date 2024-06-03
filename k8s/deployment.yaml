@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appjendoc01
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appjendoc01
+  template:
+    metadata:
+      labels:
+        app: appjendoc01
+    spec:
+      containers:
+        - name: web-app
+          image: ardixus/appjendoc01
+          ports:
+            - containerPort: 80
