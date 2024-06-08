@@ -6,7 +6,7 @@ pipeline {
         GIT_REPO = 'https://github.com/ardixus/my_firstime.git' // Replace with your GitHub repository URL
         DOCKER_IMAGE = 'ardixus/appjendoc01' // Replace with your Docker Hub username and image name
         KUBERNETES_NAMESPACE = 'default' // Replace with your desired Kubernetes namespace
-        KUBE_CONFIG = 'C:\\Users\\User\\.minikube\\config'
+        KUBE_CONFIG = 'C:\\Users\\User\\.kube\\config'
     }
 
     stages {
