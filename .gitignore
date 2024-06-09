@@ -3,3 +3,4 @@ dist
 .env
 .DS_Store
 k8s/accessrole.yaml
+Jenkinsfile_old

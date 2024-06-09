@@ -34,6 +34,58 @@ pipeline {
             }
         }
 
+        stage('Testing') {
+            parallel {
+                stage('Unit Testing') {
+                    steps {
+                        script {
+                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
+                                bat 'npm install'
+                                bat 'npm test'
+                            }
+                        }
+                    }
+                }
+                stage('Integration Testing') {
+                    steps {
+                        script {
+                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
+                                bat 'npm run integration-test'
+                            }
+                        }
+                    }
+                }
+                stage('E2E Testing') {
+                    steps {
+                        script {
+                            docker.image('cypress/included:8.0.0').inside {
+                                bat 'npm install'
+                                bat 'npm run e2e'
+                            }
+                        }
+                    }
+                }
+                stage('Code Quality') {
+                    steps {
+                        script {
+                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
+                                bat 'npm run lint'
+                            }
+                        }
+                    }
+                }
+                stage('Security Scanning') {
+                    steps {
+                        script {
+                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
+                                bat 'npm audit'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -52,4 +104,3 @@ pipeline {
         }
     }
 }
-
