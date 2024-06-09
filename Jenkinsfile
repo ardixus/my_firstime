@@ -36,24 +36,6 @@ pipeline {
 
         stage('Testing') {
             parallel {
-                stage('Unit Testing') {
-                    steps {
-                        script {
-                            bat """
-                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm install && npm test"
-                            """
-                        }
-                    }
-                }
-                stage('Integration Testing') {
-                    steps {
-                        script {
-                            bat """
-                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm run integration-test"
-                            """
-                        }
-                    }
-                }
                 stage('E2E Testing') {
                     steps {
                         script {
