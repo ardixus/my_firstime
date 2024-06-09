@@ -10,3 +10,24 @@ spec:
       port: 80
       targetPort: 80
   type: NodePort
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: appjendoc01-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: webapp.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: appjendoc01
+            port:
+              number: 80
