@@ -39,47 +39,45 @@ pipeline {
                 stage('Unit Testing') {
                     steps {
                         script {
-                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
-                                bat 'npm install'
-                                bat 'npm test'
-                            }
+                            bat """
+                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm install && npm test"
+                            """
                         }
                     }
                 }
                 stage('Integration Testing') {
                     steps {
                         script {
-                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
-                                bat 'npm run integration-test'
-                            }
+                            bat """
+                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm run integration-test"
+                            """
                         }
                     }
                 }
                 stage('E2E Testing') {
                     steps {
                         script {
-                            docker.image('cypress/included:8.0.0').inside {
-                                bat 'npm install'
-                                bat 'npm run e2e'
-                            }
+                            bat """
+                            docker run --rm cypress/included:8.0.0 cmd /c "npm install && npm run e2e"
+                            """
                         }
                     }
                 }
                 stage('Code Quality') {
                     steps {
                         script {
-                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
-                                bat 'npm run lint'
-                            }
+                            bat """
+                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm run lint"
+                            """
                         }
                     }
                 }
                 stage('Security Scanning') {
                     steps {
                         script {
-                            docker.image("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
-                                bat 'npm audit'
-                            }
+                            bat """
+                            docker run --rm ${env.DOCKER_IMAGE}:${env.BUILD_NUMBER} cmd /c "npm audit"
+                            """
                         }
                     }
                 }
